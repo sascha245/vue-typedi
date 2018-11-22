@@ -1,0 +1,60 @@
+{
+  "name": "vue-typedi",
+  "version": "1.0.0",
+  "description": "Use typedi injections in Vue components",
+  "main": "build/src/index.js",
+  "typings": "build/src/index.d.ts",
+  "repository": "https://github.com/sascha245/vue-typedi",
+  "license": "MIT",
+  "keywords": [
+    "vue",
+    "typedi"
+  ],
+  "scripts": {
+    "serve": "vue-cli-service serve ./samples/main.ts",
+    "build": "rimraf ./build && tsc -p tsconfig.prod.json",
+    "lint": "vue-cli-service lint",
+    "test:unit": "vue-cli-service test:unit --verbose",
+    "validate": "npm run build && npm run test:unit && npm pack --dry-run"
+  },
+  "dependencies": {
+    "reflect-metadata": "^0.1.12",
+    "typedi": "^0.8.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^23.1.4",
+    "@vue/cli-plugin-babel": "^3.0.4",
+    "@vue/cli-plugin-typescript": "^3.0.4",
+    "@vue/cli-plugin-unit-jest": "^3.0.4",
+    "@vue/cli-service": "^3.0.4",
+    "@vue/test-utils": "^1.0.0-beta.20",
+    "babel-core": "7.0.0-bridge.0",
+    "lint-staged": "^7.2.2",
+    "rimraf": "^2.6.2",
+    "ts-jest": "^23.0.0",
+    "tslint-config-prettier": "^1.15.0",
+    "typescript": "^3.0.0",
+    "vue": "^2.5.17",
+    "vue-class-component": "^6.3.2",
+    "vue-property-decorator": "^7.0.0",
+    "vue-router": "^3.0.1",
+    "vue-template-compiler": "^2.5.17"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "vue-cli-service lint",
+      "git add"
+    ],
+    "*.vue": [
+      "vue-cli-service lint",
+      "git add"
+    ]
+  },
+  "peerDependencies": {
+    "vue": "^2.5.17",
+    "vue-class-component": "^6.3.2"
+  }
+}
