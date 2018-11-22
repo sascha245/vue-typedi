@@ -1,4 +1,5 @@
-import Container, { Token } from 'typedi';
+import { Container, Inject as TypediInject, Token } from 'typedi';
+import Vue from 'vue';
 import { createDecorator } from 'vue-class-component';
 
 import { setInjection } from './utils';
@@ -11,20 +12,27 @@ export function Inject(token: Token<any>): Function;
 
 export function Inject(typeOrName?: InjectType) {
   return (target: any, propertyName: string, index?: number) => {
-    let identifier: any;
-    if (typeof typeOrName === 'string') {
-      identifier = typeOrName;
-    } else if (typeOrName instanceof Token) {
-      identifier = typeOrName;
-    } else {
-      identifier = (Reflect as any).getMetadata('design:type', target, propertyName);
-    }
+    if (target instanceof Vue) {
+      // Use special injection method
+      let identifier: any;
+      if (typeof typeOrName === 'string') {
+        identifier = typeOrName;
+      } else if (typeOrName instanceof Token) {
+        identifier = typeOrName;
+      } else {
+        identifier = (Reflect as any).getMetadata('design:type', target, propertyName);
+      }
 
-    const value = Container.get<any>(identifier);
-    const decorator = createDecorator(options => {
-      setInjection(options, propertyName, value);
-    });
-    decorator(target, propertyName, index!);
+      const value = Container.get<any>(identifier);
+      const decorator = createDecorator(options => {
+        setInjection(options, propertyName, value);
+      });
+      decorator(target, propertyName, index!);
+    } else {
+      // Use typedi inject
+      const decorator = TypediInject(typeOrName as any);
+      decorator(target, propertyName, index);
+    }
   };
 }
 

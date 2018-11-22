@@ -17,4 +17,13 @@ describe('Vue Component', () => {
 
     expect(vm.testService).not.toBeUndefined();
   });
+
+  it('anotherModule is injected', () => {
+    const wrapper = mount(Home, {});
+
+    const vm: Home = wrapper.vm;
+
+    expect(vm.testService).not.toBeUndefined();
+    expect(vm.testService.anotherService).not.toBeUndefined();
+  });
 });

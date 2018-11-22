@@ -1,6 +1,6 @@
 {
   "name": "vue-typedi",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Use typedi injections in Vue components",
   "main": "build/src/index.js",
   "typings": "build/src/index.d.ts",

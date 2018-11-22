@@ -35,7 +35,7 @@ Vue.use(VueTypedi);
 
 ```ts
 
-import { Container, Inject } from 'vue-typedi';
+import { Inject } from 'vue-typedi';
 import MyService from '...';
 
 @Component
@@ -49,9 +49,10 @@ export default class MyComponent extends Vue {
 
 ## Decorators
 
-- `@Inject()` only targets and works in Vue components. If you wish to inject a service somewhere else, use the `@Inject` provided by typedi.
+- `@Inject()` to inject a service in your Vue components or other services.
 
-- `@Injectable()` implements a feature missing in typedi, that will inject the service in the classes prototype. This allows us to automatically inject services in non service classes.
+- `@Injectable()` allows us to inject the services in non service classes.
+**Note**: When using this decorator, the services will be injected in the prototype of the decorated class.
 
 ## License
 
