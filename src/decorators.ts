@@ -23,7 +23,7 @@ export function Inject(typeOrName?: InjectType) {
         identifier = (Reflect as any).getMetadata('design:type', target, propertyName);
       }
 
-      const value = Container.get<any>(identifier);
+      const value = () => Container.get<any>(identifier);
       const decorator = createDecorator(options => {
         setInjection(options, propertyName, value);
       });
@@ -39,10 +39,18 @@ export function Inject(typeOrName?: InjectType) {
 export function Injectable() {
   return <T extends { new (...args: any[]): {} }>(target: T) => {
     const handlers = Container.handlers.filter(handler => handler.object.constructor === target);
-    handlers.forEach(handler => {
-      if (handler.propertyName) {
-        target.prototype[handler.propertyName] = handler.value(Container.of(undefined));
-      }
-    });
+
+    const type = function(...args: any[]) {
+      const instance = new target(...args);
+      handlers.forEach(handler => {
+        if (handler.propertyName) {
+          instance[handler.propertyName] = handler.value(Container.of(undefined));
+        }
+      });
+      return instance;
+    } as any;
+
+    type.prototype = target.prototype;
+    return type;
   };
 }

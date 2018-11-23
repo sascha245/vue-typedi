@@ -6,7 +6,7 @@ export function install(vue: any) {
       const injections = getInjections(this.$options);
       if (injections) {
         injections.forEach((value, propertyName) => {
-          this[propertyName] = value;
+          this[propertyName] = value();
         });
       }
     }

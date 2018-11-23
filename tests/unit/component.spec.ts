@@ -5,9 +5,11 @@ import Vue from 'vue';
 import { mount } from '@vue/test-utils';
 
 import Home from '../../samples/views/Home';
-import VueTypedi from '../../src';
+import VueTypedi, { Container } from '../../src';
 
 Vue.use(VueTypedi);
+
+Container.set('token', 'myToken');
 
 describe('Vue Component', () => {
   it('testModule is injected', () => {

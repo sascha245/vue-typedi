@@ -52,7 +52,6 @@ export default class MyComponent extends Vue {
 - `@Inject()` to inject a service in your Vue components or other services.
 
 - `@Injectable()` allows us to inject the services in non service classes.
-**Note**: When using this decorator, the services will be injected in the prototype of the decorated class.
 
 ## License
 
